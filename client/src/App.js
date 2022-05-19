@@ -30,7 +30,17 @@ function App() {
     if (studentID.length === 10 && isNum(studentID)){
       setAuthorized(true);
       //socket: join room here
-
+	  SOCKET.on('chatroom_'+room,msg=>{
+		  if(msg.room == room){
+			  if(msg.content){
+				  setTimeout(function(){
+					  console.log(chatHistory)
+					  chatHistory.push(msg.content);
+					  setChatHistory(JSON.parse(JSON.stringify(chatHistory)));
+				  },500)
+			  }
+		  }
+	  })
       //
     } else {
       alert('Please type in a valid student ID')
@@ -46,10 +56,9 @@ function App() {
         message: message,
       },
     };
-    // socket send message here
-
+    // socket send message
+	SOCKET.emit("chat message",messageObj)
     //
-    setChatHistory([...chatHistory, messageObj.content]);
     // clear
     var messageInput = document.getElementById("messageInput");
     messageInput.value = "";
