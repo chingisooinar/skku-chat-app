@@ -40,7 +40,15 @@ function App() {
 				  },500)
 			  }
 		  }
-	  })
+	  });
+	    //User online status
+	    SOCKET.emit("chat message",{
+              room: room,
+              content: {
+                sender: studentID,
+                message: 'I am online now~'
+              },
+            })
       //
     } else {
       alert('Please type in a valid student ID')
