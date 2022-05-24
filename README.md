@@ -1,6 +1,6 @@
 # Simple Chat-TODO App
 
-![Untitled](Simple%20Chat-TODO%20App%20667e28e0545a49f88584e16031ec5472/Untitled.png)
+![Untitled](media/Untitled.png)
 
 
 # Development Stack
