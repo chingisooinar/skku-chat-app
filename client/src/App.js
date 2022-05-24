@@ -3,6 +3,7 @@ import './App.css';
 import io from "socket.io-client";
 import { Button, Card, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import mainLogo from './app_logo.png';
 
 let SOCKET;
 const URL = 'localhost:3001/'
@@ -13,7 +14,7 @@ function Todo({ todo, index, completeTodo, removeTodo }) {
     >
       <div class="row">
       <div class="col">
-      <p><b>Responsible: </b>{todo.user}</p> 
+      <p><b>Responsible: </b>{todo.user}</p>
       <span class="text-break" style={{ textDecoration: todo.isDone ? "line-through" : "" }}>
         {todo.text}
       </span>
@@ -51,6 +52,7 @@ function FormTodo({ addTodo, users }) {
       <select class="dropdown btn-secondary rounded" id = "UsersList" placeholder="Choose user" onChange={(e) => {
             setUser(e.target.value);
           }} >
+          <option>___________</option>
           {users.map((user) => {
             return (
               <option> {user} </option>
@@ -98,6 +100,14 @@ function App() {
 const addTodo = (text, user) => {
   const newTodos = [...todos, { text: text , user:user,  isDone: false}];
   setTodos(newTodos);
+  //Notify
+  SOCKET.emit("chat message",{
+          room: room,
+          content: {
+            sender: studentID,
+            message: `I created a task "${text}" for ${user}~`
+          },
+        })
   SOCKET.emit("update todos",{
           room: room,
           todos: newTodos
@@ -108,6 +118,14 @@ const completeTodo = index => {
   const newTodos = [...todos];
   newTodos[index].isDone = true;
   setTodos(newTodos);
+  //Notify
+  SOCKET.emit("chat message",{
+          room: room,
+          content: {
+            sender: 'System',
+            message: `The task "${newTodos[index].text}" is done~`
+          },
+        })
   SOCKET.emit("update todos",{
           room: room,
           todos: newTodos
@@ -180,25 +198,25 @@ const removeTodo = index => {
       //This is HTML for authorization
       <div className="container">
         <div>
-          <img src="chatAppIcon.png" class = "rounded" alt="This is an icon of this chatting app." width="650"/> 
+          <img src={mainLogo} class = "rounded mb-5" alt="This is an icon of this chatting app." width="40%"/>
         </div>
         <div className="login-form">
-            <h1 class="h4 mb-3 fw-normal">Sign in    
+            <h1 class="h4 mb-3 fw-normal">Sign in
             <select class = "ms-2 dropdown btn-secondary mb-3 rounded" id = "RoomList" placeholder="Room" onChange={(e) => {
                 {
                   setRoom(e.target.value);
                 }
-                
+
               }}>
-              
+
               <option> _______________ </option>
-              <option> w3schools </option>
-              <option> Javatpoint </option>
-              <option> tutorialspoint </option>
-              <option> geeksforgeeks </option>
-          
+              <option> Open Source Software Practice </option>
+              <option> Algorithms </option>
+              <option> Data Structure </option>
+              <option> Artificial Intelligence </option>
+
             </select>
-           </h1> 
+           </h1>
           <div class="form-floating w-75 m-auto">
             <input
               id="idInput"
@@ -211,8 +229,8 @@ const removeTodo = index => {
             />
             <label for="idInput">StudentID</label>
           </div>
-            
-            
+
+
         </div>
             <button type="button" class="btn btn-secondary w-75 m-auto mb-4" onClick={connectToRoom}><h4>Enter Chat</h4></button>
       </div>
@@ -221,7 +239,7 @@ const removeTodo = index => {
       <div className="chat-container">
         <div class="chat-room-info font-monospace">
           <div class="text-start text-white">
-            room for 
+            room for
             <h1>{room}</h1>
           </div>
         </div>
@@ -299,7 +317,7 @@ const removeTodo = index => {
                    />
                   </Card.Body>
                 </Card>
-                
+
               ))}
             </div>
           </div>
@@ -307,21 +325,21 @@ const removeTodo = index => {
       </div>
 
       <div className="messages">
-        <p class="chatbox mb-2 border">  
+        <p class="chatbox mb-2 border">
 
         {chatHistory.map((val, key) => {
           return (
             <div
               className="message-container"
-              id={val.sender == studentID ? "mymessage" : "outsidemessage"}
-            > 
+              id={val.sender === studentID ? "mymessage" : "outsidemessage"}
+            >
               <div className="message-box">
               {
-              val.sender == studentID ?
+              val.sender === studentID ?
                 <div class="my_msg">
                   <div class="card border-warning w-75 float-end me-2 mb-1 mt-1">
                     <div class="card-header text-end font-monospace">
-                      {val.sender} 
+                      {val.sender}
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
                         <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
                       </svg>
@@ -334,13 +352,13 @@ const removeTodo = index => {
                   </div>
 
                 </div>
-                : 
+                :
                 <div class="other_msg">
                   <div class="card border-secondary w-75 float-start ms-2 mb-1 mt-1">
                     <div class="card-header text-start font-monospace">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
                       <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
-                    </svg> 
+                    </svg>
                     {val.sender}
                     </div>
                     <div class="card-body">
