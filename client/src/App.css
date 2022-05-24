@@ -28,6 +28,69 @@
   color: #61dafb;
 }
 
+body.wrapper { 
+  background: #d1d1d1; 
+  font-family: "Segoe UI";
+}
+
+#root { 
+  width: 720px; 
+  background: white; 
+  margin: auto; 
+  padding: 10px; 
+  border-radius: 10px; 
+  border: 1px solid lightgray; 
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.1);
+}
+
+p.chatbox {
+  margin: auto;
+  width: 450px;
+  height: 500px;
+  background:rgba(0, 0, 0, 0.1);
+  text-align: center;
+  text-decoration: dashed;
+  overflow-x: hidden;
+  overflow-y: auto;
+  border-bottom-right-radius: 5px; 
+  border-bottom-left-radius: 5px; 
+}
+
+.chat-room-info {
+  margin: auto;
+  width: 450px;
+  margin-bottom: 11px;
+  background: gray;
+  text-indent: 7.5em;
+  border-radius: 5px;
+}
+
+li {
+  margin:auto;
+}
+
+.inputbox {
+  margin: auto;
+  width: 450px;
+}
+
+.nav {
+  margin : auto;
+  width: 450px;
+  background-color: rgb(231, 231, 231);
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+}
+
+.collapse {
+  margin : auto;
+  width: 450px;
+}
+
+Card {
+  width:100px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
