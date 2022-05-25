@@ -357,7 +357,12 @@ const removeTodo = index => {
 
                 </div>
                 :
-                <div className="other_msg">
+                <div className="other_msg" onClick={() =>  {
+                      var messageInput = document.getElementById("messageInput");
+                      messageInput.value = "@"+val.sender;
+                      setMessage( "@"+val.sender);
+                      }
+                     }>
                   <div className="card border-secondary w-75 float-start ms-2 mb-1 mt-1">
                     <div className="card-header text-start font-monospace">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-caret-right-fill" viewBox="0 0 16 16">
