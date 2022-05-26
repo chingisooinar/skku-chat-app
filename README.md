@@ -10,6 +10,12 @@
 - Node.js
 - Socket.io
 
+# Setup
+- Install dependancies
+- Run **node index.js** in server/
+- Run **npm start** in client/
+- Have fun!
+
 # Functions
 
 ## Chatting
